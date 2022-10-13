@@ -1,65 +1,76 @@
-    var lastPositionOfX, lastPositionOfY;
-    color = "black";
-    widthOfLine = 2;
-    canvas = document.getElementById('myCanvas');
-    ctx = canvas.getContext("2d");
-    
-    
-    var width = screen.width - 70;
-    
-    newWidth = screen.width - 70;
-    newHeight = screen.height - 300;
-         if(width < 992)
-         {
-        document.getElementById("myCanvas").width = newWidth;
-        document.body.style.overflow = "hiddden";
-         }
-           canvas.addEventListener("touchstart", myTouchStart);
-
-function myTouchStart(e)
+var mouseEvent = "empty";
+ var lastPositionX, lastPositionY;
+canvas=document.getElementById("myCanvas");
+ctx=canvas.getContext("2d");
+color="black";
+widthOfLine=1;
+//ctx.beginPath();
+//ctx.strokeStyle=color;
+//ctx.lineWidth=2;
+//ctx.arc(200,200,40,0,2*Math.PI);
+//ctx.stroke();
+canvas.addEventListner("mousedown",myMousedown);
+function myMousedown(e)
 {
-      console.log("touchstart", myTouchStart);
-      //Atividade Adicional
-      color = document.getElementByld("color").value;
-      widthOfLine = document.getElementById("widthOfLine").value;
-      //Fim da Atividade Adicional
-
-      lastPositionOfX = e.tounches[0].clientX - canvas.OffsetLeft;
-      lastPositionOfY = e.touches[0].clientY - canvas.offsetTop
-}
-
-
-canvas.addEventListener("touchmove", myTouchMove);
-
-function myTouchMove(e) 
-{
-
-	console.log("myTouchMove");
-    currentPositionOfTouchX = e.touches[0].clientX - canvas.offsetLeft;
-    currentPositionOfTouchY = e.touches[0].clientY - canvas.offsetTop;
-
-    // mesmo código utilizado para a versão web
-    ctx.beginPath();
-    ctx.strokeStyle = color;
-    ctx.lineWidth = widthOfLine;
-
-    console.log("Last position of x and y coordinates = ");
-    console.log("x = " + lastPositionOfX + "y = " + lastPositionOfY);
-    ctx.moveTo(lastPositionOfX, lastPositionOfY);
-
-    console.log("Current position of x and y coordinates = ");
-    console.log("x  = " + currentPositionOfTouchX + "y = " + currentPositionOfTouchY);
-    ctx.lineTo(currentPositionOfTouchX, currentPositionOfTouchY);
-    ctx.stroke();
-
-    lastPositionOfX = currentPositionOfTouchX; 
-    lastPositionOfY = currentPositionOfTouchY;
+    //obtém a cor da caixa de inserção
+    //início da atividade adicional
+    color = document.getElementById("color").value;
+    widthLine=document.getElementByid("whidthOfLine").value;
+    console.log(color);
+    //fim da atividade adicional
     
-    // fim do mesmo código utilizado para a versão web
+     //mouseX = e.clientX - canvas.offsetLeft;
+     //mouseY = e.clientY - canvas.offsetTop;
+
+    //console.log("X = " + mouseX + " ,Y =  " + mouseY);
+    //circle(mouseX , mouseY);
+    mouseEvent="mouseDown";
+}
+canvas.addEventListner("mouseleave",myMouseLeave);
+function myMouseLeave(e)
+{
+    mouseEvent = "mouseleave";
+}
+canvas.addEventListerner("mouseup", myMouseUp);
+function myMouseUp(e)
+{
+    mouseEvent = "mouseUP"
+}
+canvas.addEventListener("mousemove", myMouseMove);
+function myMouseMove(e)
+{
+    PositionMouseX = e.clientX - canvas.offsetLeft;
+    PositionMouseY = e.clientY - canvas.offsetTop;
+
+    if (mouseEvent == "mouseDow") {
+        ctx.beginPath();
+        ctx.strokeStyle = color;
+        ctx.lineWidth = widthLine;
+        console.log("Last position of x and y coordinates = ");
+        console.log("x = " + lastPositionX + "y = " + lastPositionY);
+        ctx.moveTo(lastPositionX, lastPositionY);
+        console.log("Current position of x and y coordinates = ");
+        console.log("x = " + PositionMouseX + "y = " + PositionMouseY);
+        ctx.lineTo(PositionMouseX, PositionMouseY);
+        ctx.stroke();
+    }
+    lastPositionX = PositionMouseX;
+    lastPositionY = PositionMouseY;
+}
+function circle(mouseX , mouseY)
+{
+ctx.beginPath();
+ctx.strokeStyle = color;
+ctx.lineWidth = 2;
+ctx.arc(mouseX ,mouseY, 40 ,0 , 2*Math.PI);
+ctx.stroke();
 }
 
-    // mesmo código utilizado para a versão web
-function clearArea() {
-    ctx.clearRect(0, 0, ctx.canvas.width, ctx.canvas.height);
+//atividade adicional
+
+function clearArea()
+{
+    ctx.clearRect(0, 0, canvas.width, canvas.height);
 }
-    // fim do mesmo código utilizado para a versão web
+
+	
